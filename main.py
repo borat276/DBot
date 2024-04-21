@@ -3,6 +3,7 @@ from discord.ext import commands
 import asyncio
 import subprocess
 import requests
+import os
 
 intents = discord.Intents.default()
 intents.message_content = True
