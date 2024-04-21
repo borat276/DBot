@@ -9,26 +9,6 @@ intents.message_content = True
 
 bot = commands.Bot(command_prefix='!', intents=intents)
 
-# urlday API endpoints
-URLDAY_API_BASE_URL = "https://www.urlday.com/api/v1"
-URLDAY_API_KEY = "9tMDiMwZZBSNAN27LbTYW0d78yP4WC3hOlMkm1ftlPxyjLOnbsMyJEF6XULK"  # Replace with your API key
-
-async def shorten_url(url, alias=None):
-    api_url = f"{URLDAY_API_BASE_URL}/links"
-    headers = {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Authorization": f"Bearer {URLDAY_API_KEY}"
-    }
-    data = {
-        "url": url,
-        "alias": alias
-    }
-    response = requests.post(api_url, headers=headers, data=data)
-    if response.status_code == 200:
-        return response.json().get("url")
-    else:
-        return None
-
 async def process_link(message, platform, filename, script_name):
     wait_message = await message.channel.send(f"Please wait a moment, getting your file from {platform}...")
 
@@ -54,11 +34,10 @@ async def process_link(message, platform, filename, script_name):
     await message.delete()
 
     if elink:
-        shortened_url = await shorten_url(elink)
-        if shortened_url:
-            await message.channel.send(f"{message.author.mention}, here is your file from {platform}: {shortened_url}")
-        else:
-            await message.channel.send(f"Sorry, {message.author.mention}, couldn't shorten the link for {platform}.")
+        await message.channel.send(f"{message.author.mention}, here is your file from {platform}: {elink}")
+        # Clear elink.txt
+        with open("elink.txt", "w") as elink_file:
+            elink_file.write("")
     else:
         await message.channel.send(f"Sorry, couldn't find a link for {platform}. Please try again later.")
 
