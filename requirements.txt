@@ -1,0 +1,10 @@
+# requirements.txt
+
+# Selenium for web automation
+selenium==4.18.1
+
+# Webdriver manager for managing browser drivers
+webdriver-manager==3.8.0
+
+# Discord.py for creating Discord bots
+discord.py==2.3.2
