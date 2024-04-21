@@ -65,7 +65,7 @@ async def process_link(message, platform, filename, script_name):
 @bot.event
 async def on_ready():
     print(f'{bot.user} has connected to Discord!')
-
+TOKEN = os.environ.get('token')
 @bot.event
 async def on_message(message):
     if message.author == bot.user:
@@ -78,4 +78,4 @@ async def on_message(message):
 
     await bot.process_commands(message)
 
-bot.run('MTE4NTI1ODQwMzM2MzMwMzQ5NA.Guw_A1.xNWRT6saPH4i0PwNE_cJJz9coovO2Akl3Eknx0')
+bot.run(TOKEN)
